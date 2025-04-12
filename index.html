@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modern Note Taking Website</title>
-    <link rel="stylesheet" href="">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bytesized&family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Lobster&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
@@ -406,157 +405,157 @@
         <p>&copy; 2025 S'Fezi's Notes Website. All rights reserved.</p>
     </footer>
     
-    <script src="">
+    <script>
         // Menu Section
-const menuBtn = document.getElementById("menu-btn");
-const navLinks = document.getElementById("nav-links");
-const menuBtnIcon = menuBtn.querySelector("i");
+        const menuBtn = document.getElementById("menu-btn");
+        const navLinks = document.getElementById("nav-links");
+        const menuBtnIcon = menuBtn.querySelector("i");
 
-menuBtn.addEventListener("click", (e) => {
-    navLinks.classList.toggle("open");
+        menuBtn.addEventListener("click", (e) => {
+            navLinks.classList.toggle("open");
 
-    const isOpen = navLinks.classList.contains("open");
-    menuBtnIcon.setAttribute("class", isOpen ? "ri-close-line" : "ri-menu-line");
-});
-
-navLinks.addEventListener("click", (e) => {
-    navLinks.classList.remove("open")
-    menuBtnIcon.setAttribute("class", "ri-menu-line");
-})
-
-
-// Note Container
-function popup() {
-    const popupContainer = document.createElement("div");
-
-    popupContainer.innerHTML = `
-    <div id="popupContainer">
-        <h1>New Note</h1>
-        <textarea id="note-text" placeholder="Enter your note..."></textarea>
-        <div id="btn-container">
-            <button id="submitBtn" onclick="createNote()">Create Note</button>
-            <button id="closeBtn" onclick="closePopup()">Close</button>
-        </div> 
-    </div>
-    `;
-    document.body.appendChild(popupContainer);
-}
-
-function closePopup() {
-    const popupContainer = document.getElementById("popupContainer");
-    if(popupContainer) {
-        popupContainer.remove();
-    }
-}
-
-function createNote() {
-    const popupContainer = document.getElementById('popupContainer');
-    const noteText = document.getElementById('note-text').value;
-    if (noteText.trim() !== '') {
-        const note = {
-        id: new Date().getTime(),
-        text: noteText
-        };
-
-        const existingNotes = JSON.parse(localStorage.getItem('notes')) || [];
-        existingNotes.push(note);
-
-        localStorage.setItem('notes', JSON.stringify(existingNotes));
-
-        document.getElementById('note-text').value = '';
-
-        popupContainer.remove();
-        displayNotes();
-    }
-}
-
-function displayNotes() {
-    const notesList = document.getElementById('notes-list');
-    notesList.innerHTML = '';
-
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-
-    notes.forEach(note => {
-        const listItem = document.createElement('li');
-        listItem.innerHTML = `
-        <span>${note.text}</span>
-        <div id="noteBtns-container">
-            <button id="editBtn" onclick="editNote(${note.id})"><i class="fa-solid fa-pen"></i></button>
-            <button id="deleteBtn" onclick="deleteNote(${note.id})"><i class="fa-solid fa-trash"></i></button>
-        </div>
-        `;
-        notesList.appendChild(listItem);
-    });
-}
-document.addEventListener("input", (e) => {
-    if (e.target.tagName === "TEXTAREA") {
-        e.target.style.margin = "20px";
-    }
-});
-function editNote(noteId) {
-    const notes = JSON.parse(localStorage.getItem('notes')) || [];
-    const noteToEdit = notes.find(note => note.id == noteId);
-    const noteText = noteToEdit ? noteToEdit.text : '';
-    const editingPopup = document.createElement("div");
-
-    editingPopup.innerHTML = `
-    <div id="editing-container" data-note-id="${noteId}">
-        <h1>Edit Note</h1>
-        <textarea id="note-text">${noteText}</textarea>
-        <div id="btn-container">
-            <button id="submitBtn" onclick="updateNote()">Done</button>
-            <button id="closeBtn" onclick="closeEditPopup()">Cancel</button>
-        </div>
-    </div>
-    `;
-
-    document.body.appendChild(editingPopup);
-}
-
-function closeEditPopup() {
-    const editingPopup = document.getElementById("editing-container");
-
-    if(editingPopup) {
-        editingPopup.remove();
-    }
-}
-
-function updateNote() {
-    const noteText = document.getElementById('note-text').value.trim();
-    const editingPopup = document.getElementById('editing-container');
-
-    if (noteText !== '') {
-        const noteId = editingPopup.getAttribute('data-note-id');
-        let notes = JSON.parse(localStorage.getItem('notes')) || [];
-
-        // Find the note to update
-        const updateNotes = notes.map(note => {
-            if (note.id == noteId) {
-                return { id: note.id, text: noteText };
-            }
-            return note;
+            const isOpen = navLinks.classList.contains("open");
+            menuBtnIcon.setAttribute("class", isOpen ? "ri-close-line" : "ri-menu-line");
         });
 
-        // Update the nots in local storage
-        localStorage.setItem('notes', JSON.stringify(updateNotes));
+        navLinks.addEventListener("click", (e) => {
+            navLinks.classList.remove("open")
+            menuBtnIcon.setAttribute("class", "ri-menu-line");
+        })
 
-        // close the editing popup
-        editingPopup.remove();
 
-        // Refresh the display notes
+        // Note Container
+        function popup() {
+            const popupContainer = document.createElement("div");
+
+            popupContainer.innerHTML = `
+            <div id="popupContainer">
+                <h1>New Note</h1>
+                <textarea id="note-text" placeholder="Enter your note..."></textarea>
+                <div id="btn-container">
+                    <button id="submitBtn" onclick="createNote()">Create Note</button>
+                    <button id="closeBtn" onclick="closePopup()">Close</button>
+                </div> 
+            </div>
+            `;
+            document.body.appendChild(popupContainer);
+        }
+
+        function closePopup() {
+            const popupContainer = document.getElementById("popupContainer");
+            if(popupContainer) {
+                popupContainer.remove();
+            }
+        }
+
+        function createNote() {
+            const popupContainer = document.getElementById('popupContainer');
+            const noteText = document.getElementById('note-text').value;
+            if (noteText.trim() !== '') {
+                const note = {
+                id: new Date().getTime(),
+                text: noteText
+                };
+
+                const existingNotes = JSON.parse(localStorage.getItem('notes')) || [];
+                existingNotes.push(note);
+
+                localStorage.setItem('notes', JSON.stringify(existingNotes));
+
+                document.getElementById('note-text').value = '';
+
+                popupContainer.remove();
+                displayNotes();
+            }
+        }
+
+        function displayNotes() {
+            const notesList = document.getElementById('notes-list');
+            notesList.innerHTML = '';
+
+            const notes = JSON.parse(localStorage.getItem('notes')) || [];
+
+            notes.forEach(note => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                <span>${note.text}</span>
+                <div id="noteBtns-container">
+                    <button id="editBtn" onclick="editNote(${note.id})"><i class="fa-solid fa-pen"></i></button>
+                    <button id="deleteBtn" onclick="deleteNote(${note.id})"><i class="fa-solid fa-trash"></i></button>
+                </div>
+                `;
+                notesList.appendChild(listItem);
+            });
+        }
+        document.addEventListener("input", (e) => {
+            if (e.target.tagName === "TEXTAREA") {
+                e.target.style.margin = "20px";
+            }
+        });
+        function editNote(noteId) {
+            const notes = JSON.parse(localStorage.getItem('notes')) || [];
+            const noteToEdit = notes.find(note => note.id == noteId);
+            const noteText = noteToEdit ? noteToEdit.text : '';
+            const editingPopup = document.createElement("div");
+
+            editingPopup.innerHTML = `
+            <div id="editing-container" data-note-id="${noteId}">
+                <h1>Edit Note</h1>
+                <textarea id="note-text">${noteText}</textarea>
+                <div id="btn-container">
+                    <button id="submitBtn" onclick="updateNote()">Done</button>
+                    <button id="closeBtn" onclick="closeEditPopup()">Cancel</button>
+                </div>
+            </div>
+            `;
+
+            document.body.appendChild(editingPopup);
+        }
+
+        function closeEditPopup() {
+            const editingPopup = document.getElementById("editing-container");
+
+            if(editingPopup) {
+                editingPopup.remove();
+            }
+        }
+
+        function updateNote() {
+            const noteText = document.getElementById('note-text').value.trim();
+            const editingPopup = document.getElementById('editing-container');
+
+            if (noteText !== '') {
+                const noteId = editingPopup.getAttribute('data-note-id');
+                let notes = JSON.parse(localStorage.getItem('notes')) || [];
+
+                // Find the note to update
+                const updateNotes = notes.map(note => {
+                    if (note.id == noteId) {
+                        return { id: note.id, text: noteText };
+                    }
+                    return note;
+                });
+
+                // Update the nots in local storage
+                localStorage.setItem('notes', JSON.stringify(updateNotes));
+
+                // close the editing popup
+                editingPopup.remove();
+
+                // Refresh the display notes
+                displayNotes();
+            }
+        }
+
+        function deleteNote(noteId) {
+            let notes = JSON.parse(localStorage.getItem('notes')) || [];
+            notes = notes.filter(note => note.id !== noteId);
+
+            localStorage.setItem('notes', JSON.stringify(notes));
+            displayNotes();
+        }
+
         displayNotes();
-    }
-}
-
-function deleteNote(noteId) {
-    let notes = JSON.parse(localStorage.getItem('notes')) || [];
-    notes = notes.filter(note => note.id !== noteId);
-
-    localStorage.setItem('notes', JSON.stringify(notes));
-    displayNotes();
-}
-
-displayNotes();
     </script>
 </body>
 </html>
