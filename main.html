@@ -388,33 +388,37 @@
         document.querySelector("body").style.overflow = "auto";
       });
 
-      // Display existing notes from localStorage
       function showNotes() {
-        if (!notes) return;
-        document.querySelectorAll(".note").forEach(li => li.remove());
-        notes.forEach((note, id) => {
-          let filterDesc = note.description.replaceAll("\n", '<br/>');
-          let liTag = `<li class="note" id="glass-effect">
-                              <div class="details">
-                                  <p>${note.title}</p>
-                                  <span>${filterDesc}</span>
-                              </div>
-                              <div class="bottom-content">
-                                  <span>${note.date}</span>
-                                  <div class="settings">
-                                      <i onclick="showMenu(this)" class="uil uil-ellipsis-h"></i>
-                                      <ul class="menu">
-                                          <li onclick="updateNote(${id}, '${note.title.replace(/'/g, "\\'")}', '${note.description.replace(/\n/g, "\\n").replace(/'/g, "\\'")}')"><i class="uil uil-pen"></i>Edit</li>
-                                          <li onclick="deleteNote(${id})"><i class="uil uil-trash"></i>Delete</li>
-                                      </ul>
-                                  </div>
-                              </div>
-                          </li>`;
-          addBox.insertAdjacentHTML("afterend", liTag);
-        });
-      }
+      if (!notes) return;
+      document.querySelectorAll(".note").forEach(li => li.remove());
+      notes.forEach((note, id) => {
+        let filterDesc = note.description.replaceAll("\n", '<br/>');
+        let liTag = `<li class="note" style="
+                    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+                    backdrop-filter: blur(20px);
+                    box-shadow: 0 9px 32px 0 rgba(0, 0, 0, 0.37);
+                    border: 1px solid rgba(255, 255, 255, 0.18);
+                    border-radius: 32px;">
+                    <div class="details">
+                        <p>${note.title}</p>
+                        <span>${filterDesc}</span>
+                    </div>
+                    <div class="bottom-content">
+                        <span>${note.date}</span>
+                        <div class="settings">
+                            <i onclick="showMenu(this)" class="uil uil-ellipsis-h"></i>
+                            <ul class="menu">
+                                <li onclick="updateNote(${id}, '${note.title.replace(/'/g, "\\'")}', '${note.description.replace(/\n/g, "\\n").replace(/'/g, "\\'")}')"><i class="uil uil-pen"></i>Edit</li>
+                                <li onclick="deleteNote(${id})"><i class="uil uil-trash"></i>Delete</li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>`;
+        addBox.insertAdjacentHTML("afterend", liTag);
+      });
+    }
 
-      showNotes();
+      
 
       // Show menu options for each note
       function showMenu(elem) {
